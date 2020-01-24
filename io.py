@@ -102,3 +102,11 @@ def writeWave(file_name, data, params=(1, 3, 48000)):
     audio.writeframes(frames) # 出力データ設定
     audio.close() # ファイルを閉じる
     return
+
+def getInfo(filename):
+
+    wr = wave.open(filename)
+    params = wr.getparams()
+    wr.close()
+
+    return params
