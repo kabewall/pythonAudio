@@ -3,8 +3,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-
-
 def fig_time(signal, fs=48000, title="wave form", xaxis="time[s]", label="signal", legend=False):
 
     if signal.ndim != 1:
@@ -20,7 +18,8 @@ def fig_time(signal, fs=48000, title="wave form", xaxis="time[s]", label="signal
         plt.xlabel("time [s]")
     else:
         error = "xaxis must be \"tap\" or \"time\""
-        return erorr
+        print error
+        return
 
     plt.title(title)
     if legend:
@@ -31,7 +30,8 @@ def fig_freqz(signal, fs=48000, title="Frequency Characteristic", label="signal"
 
     if signal.ndim != 1:
         error = "dim of signal must be 1."
-        return print(error)
+        print(error)
+        return
 
     signalF = fft.fft(signal)
     N = signalF.shape[0]
