@@ -13,7 +13,7 @@ setup(
     name = "pythonAudio",
     version = '1.0.0',
     url = 'https://github.com/kabewall/pythonAudio.git',
-    long_description = 'readme'
+    long_description = 'readme',
     license = license,
     author = "kabewall",
     author_email = "kouhei.kabe@gmail.com",
