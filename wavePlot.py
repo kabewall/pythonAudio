@@ -2,8 +2,9 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+import scipy.fftpack as fft
 
-def fig_time(signal, fs=48000, title="wave form", xaxis="time[s]", label="signal", legend=False):
+def fig_time(signal, fs=48000, title="wave form", xaxis="time", label="signal", legend=False):
 
     if signal.ndim != 1:
         error = "dim of signal must be 1."
@@ -18,7 +19,7 @@ def fig_time(signal, fs=48000, title="wave form", xaxis="time[s]", label="signal
         plt.xlabel("time [s]")
     else:
         error = "xaxis must be \"tap\" or \"time\""
-        print error
+        print (error)
         return
 
     plt.title(title)
