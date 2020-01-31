@@ -11,7 +11,7 @@ with open('LICENSE') as f:
 
 setup(
     name = "pythonAudio",
-    version = '1.0.0'
+    version = '1.0.0',
     url = 'https://github.com/kabewall/pythonAudio.git',
     long_description = 'readme'
     license = license,
