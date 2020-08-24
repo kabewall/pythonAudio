@@ -5,7 +5,7 @@ import wave
 import matplotlib.pyplot as plt
 import wavePlot
 import scipy.fftpack as fft
-
+import csv
 
 def readWave(filename):
 
@@ -202,7 +202,6 @@ def aweight_dB(data, fs):
 
 audio_path = r"/Users/watakabe/Documents/python/wave/white_1000ms.wav"
 audio_data = readWave(audio_path)
-audio_data.shape
 audio_params = getInfo(audio_path)
 audio_params
 fs = audio_params[2]
@@ -211,18 +210,40 @@ nframes = audio_params[3]
 
 test_db = aweight_dB(audio_data, fs)
 
-test_db
+
+def stereo2mono(path):
+
+    stereo_data = readWave(path)
+    stereo_params = getInfo(path)
+    out_path = path[:-4]
+
+    writeWave("%s_L.wav", stereo_data[0], params=(1, stereo_params[1], stereo_params[2]))
+    writeWave("%s_R.wav", stereo_data[1], params=(1, stereo_params[1], stereo_params[2]))
+
 
 
 
 fig_all(audio_data, fs)
 
+test_db = 10
+
+list_db = [[], []]
+
+list_db[0].append(test_db)
+list_db[1].append(test_db+20)
+
+list_db = [[], []]
+for i in range(20):
+
+    test_dbL = aweight_dB(dataL, fs)
+    test_dbR = aweight_dB(dataR, fs)
+
+    list_db[0].append(testdbL)
+    list_db[1].append(testdbR)
 
 
-list_db = [10, 20, 30, 40]
 
-import csv
 
 with open("/Users/watakabe/Documents/python/wave/test.csv", 'w') as f:
     writer = csv.writer(f)
-    writer.writerow(list_db)
+    writer.writerows(list_db)
