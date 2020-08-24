@@ -129,39 +129,59 @@ def aweightings(f):
     return ra
 
 
-audio_path = r"/Users/watakabe/Documents/python/wave/white_1000ms.wav"
-audio_data = readWave(audio_path)
-audio_data.shape
-audio_params = getInfo(audio_path)
-audio_params
-fs = audio_params[2]
-nframes = audio_params[3]
 
-#
-# f = np.linspace(0, 48000, 8192)
-# f
-#
-# f_aweight = aweightings(f)
-# t_aweight = np.fft.ifft(f_aweight).real
-#
-#
-# plt.plot(f[1:f.size//2], 20*np.log10(np.abs(f_aweight[1:f_aweight.size//2])))
-# plt.xscale('log')
-#
-# data_f = np.fft.fft(audio_data)
-# f = np.linspace(0, 48000, nframes)
-# f_aweight = aweightings(f)
-# out = data_f * f_aweight
-# plt.plot(f[1:f.size//2], 20*np.log10(np.abs(out[1:out.size//2])))
-# plt.xscale('log')
-# plt.plot(f[1:f.size//2], 20*np.log10(np.abs(audio_data[1:audio_data.size//2])))
-#
-# out_t = np.real(np.fft.ifft(out))
-#
-# wavePlot.fig_all(out_t)
-#
-# ave2 = 20*np.log10(np.sqrt(np.mean(np.square(out_t))))
-# ave2
+
+def fig_time(signal, fs=48000, title="wave form", xaxis="time", label="signal", legend=False):
+
+    if signal.ndim != 1:
+        error = "dim of signal must be 1."
+        return print(error)
+
+    if xaxis == "tap":
+        plt.plot(signal, label=label)
+        plt.xlabel("tap")
+    elif xaxis == "time":
+        time = np.linspace(0, signal.shape[0]/fs, signal.shape[0])
+        plt.plot(time, signal, label=label)
+        plt.xlabel("time [s]")
+    else:
+        error = "xaxis must be \"tap\" or \"time\""
+        print (error)
+        return
+
+    plt.title(title)
+    if legend:
+        legend()
+
+
+def fig_freqz(signal, fs=48000, title="Frequency Characteristic", label="signal", legend=False):
+
+    if signal.ndim != 1:
+        error = "dim of signal must be 1."
+        print(error)
+        return
+
+    signalF = fft.fft(signal)
+    N = signalF.shape[0]
+    f = fft.fftfreq(signalF.shape[0], d=1/fs)
+    plt.plot(f[:N//2], 20*np.log10(np.abs(signalF[:N//2])/np.max(np.abs(signalF[:N//2]))), label=label)
+    plt.xscale('log')
+    plt.xlim(20, fs//2)
+    plt.xlabel("Frequency [Hz]")
+    plt.ylabel("Level [dB]")
+    plt.title(title)
+    if legend:
+        plt.legend()
+
+
+def fig_all(signal, fs=48000, num=1, time_title="Signal wave", time_xaxis="time", freqz_title="Frequency Responce", suptitle="Signal", label="signal"):
+    plt.figure(num, figsize=[14,5])
+    plt.subplot(121)
+    fig_time(signal, fs, title=time_title, xaxis=time_xaxis, label=label)
+    plt.subplot(122)
+    fig_freqz(signal, fs, title=freqz_title, label=label)
+    plt.ylim(-70, 0)
+    plt.suptitle(suptitle)
 
 
 def aweight_dB(data, fs):
@@ -179,3 +199,30 @@ def aweight_dB(data, fs):
     ave2 = 20*np.log10(np.sqrt(np.mean(np.square(out))))
 
     return ave2
+
+audio_path = r"/Users/watakabe/Documents/python/wave/white_1000ms.wav"
+audio_data = readWave(audio_path)
+audio_data.shape
+audio_params = getInfo(audio_path)
+audio_params
+fs = audio_params[2]
+nframes = audio_params[3]
+
+
+test_db = aweight_dB(audio_data, fs)
+
+test_db
+
+
+
+fig_all(audio_data, fs)
+
+
+
+list_db = [10, 20, 30, 40]
+
+import csv
+
+with open("/Users/watakabe/Documents/python/wave/test.csv", 'w') as f:
+    writer = csv.writer(f)
+    writer.writerow(list_db)
