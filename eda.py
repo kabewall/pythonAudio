@@ -217,8 +217,8 @@ def stereo2mono(path):
     stereo_params = getInfo(path)
     out_path = path[:-4]
 
-    writeWave("%s_L.wav", stereo_data[0], params=(1, stereo_params[1], stereo_params[2]))
-    writeWave("%s_R.wav", stereo_data[1], params=(1, stereo_params[1], stereo_params[2]))
+    writeWave("%s_L.wav"%out_path, stereo_data[0], params=(1, stereo_params[1], stereo_params[2]))
+    writeWave("%s_R.wav"%out_path, stereo_data[1], params=(1, stereo_params[1], stereo_params[2]))
 
 
 
