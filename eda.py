@@ -220,7 +220,7 @@ def stereo2mono(path):
     writeWave("%s_L.wav"%out_path, stereo_data[0], params=(1, stereo_params[1], stereo_params[2]))
     writeWave("%s_R.wav"%out_path, stereo_data[1], params=(1, stereo_params[1], stereo_params[2]))
 
-
+stereo2mono(audio_path)
 
 
 fig_all(audio_data, fs)
