@@ -3,7 +3,7 @@
 import numpy as np
 import scipy.fftpack as fft
 
-def mkwhite(t, fs=48000):
+def mkWhite(t, fs=48000):
 
     tap = int(t*fs)
     white = np.random.randn(tap)
@@ -11,7 +11,7 @@ def mkwhite(t, fs=48000):
     return white
 
 
-def mkpink(t, fs=48000):
+def mkPink(t, fs=48000):
 
     tap = int(t*fs)
     white = mkwhite(t, fs)
